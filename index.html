@@ -1,3 +1,240 @@
-Lab #1:
-I would like to make a website on the topic of Harry Potter. 
-A Website that appeals to me: https://franshalsmuseum.nl/en
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Harry Potter — Wizarding Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <style>
+    :root{
+      --bg:#0e0e12; --ink:#f6f6f6; --ink-muted:#c9cad1; --accent:#d4af37; --card:#15151d; --line:#262633;
+      --gryff:#a21c1c; --slyth:#0f5132; --rav:#1d4ed8; --huff:#b7791f;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0; background:var(--bg); color:var(--ink); font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
+    a{color:inherit; text-decoration:none}
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(10px);
+      background:rgba(14,14,18,.7); border-bottom:1px solid var(--line);
+    }
+    .wrap{max-width:1100px; margin:0 auto; padding:1rem 1.25rem}
+    .brand{display:flex; align-items:center; gap:.75rem}
+    .brand .logo{width:36px; height:36px; background:radial-gradient(circle at 30% 30%, var(--accent), transparent 60%), linear-gradient(135deg,#222, #111); border-radius:8px}
+    nav{display:flex; gap:1rem; align-items:center; justify-content:space-between}
+    .menu{display:flex; gap:1rem; list-style:none; margin:0; padding:0}
+    .menu li{padding:.4rem .7rem; border-radius:999px; transition:transform .15s ease}
+    .menu li:hover{transform:translateY(-1px)}
+    .menu li.active{outline:1px solid var(--accent); background:rgba(212,175,55,.1)}
+
+    .hero{display:grid; place-items:center; text-align:center; padding:5rem 1.25rem 3rem; border-bottom:1px solid var(--line); background:radial-gradient(1000px 400px at 50% 0%, rgba(212,175,55,.08), transparent 60%)}
+    .hero h1{font-family:"Playfair Display", serif; font-size:clamp(2rem, 6vw, 3.5rem); letter-spacing:.5px; margin:.3rem 0 .6rem}
+    .hero p{color:var(--ink-muted); max-width:52ch; margin:0 auto 1.25rem}
+    .hero .cta{display:flex; gap:.75rem; justify-content:center}
+    .button{border:1px solid var(--accent); background:rgba(212,175,55,.1); color:var(--ink); padding:.7rem 1rem; border-radius:10px; cursor:pointer}
+
+    .filters{display:flex; gap:.5rem; flex-wrap:wrap; padding:1rem 0; border-bottom:1px solid var(--line)}
+    .chip{border:1px solid var(--line); background:var(--card); padding:.45rem .75rem; border-radius:999px; cursor:pointer; transition:all .15s}
+    .chip.active{border-color:var(--accent); box-shadow:0 0 0 2px rgba(212,175,55,.12) inset}
+
+    .grid{display:grid; grid-template-columns:repeat(12,1fr); gap:1rem; padding:1.25rem 0 3rem}
+    .card{grid-column:span 12; background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden; transition:transform .2s ease, box-shadow .2s ease}
+    .card:hover{transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.25)}
+    .card img{width:100%; height:200px; object-fit:cover}
+    .card .pad{padding:1rem}
+    .tag{display:inline-flex; align-items:center; gap:.35rem; font-size:.8rem; color:#e9e9ef; padding:.25rem .55rem; border-radius:999px; border:1px solid var(--line)}
+    .tag .dot{width:8px; height:8px; border-radius:50%}
+    .tag.gryff .dot{background:var(--gryff)}
+    .tag.slyth .dot{background:var(--slyth)}
+    .tag.rav .dot{background:var(--rav)}
+    .tag.huff .dot{background:var(--huff)}
+
+    @media (min-width:700px){ .card{grid-column:span 6} }
+    @media (min-width:1000px){ .card{grid-column:span 4} }
+
+    .faq{border-top:1px solid var(--line); padding:2rem 0}
+    .faq h2{font-family:"Playfair Display", serif; margin:.2rem 0 1rem}
+    .qa{border:1px solid var(--line); border-radius:12px; margin:.75rem 0; overflow:hidden}
+    .q{padding:1rem; background:linear-gradient(180deg, #171722, #14141c); cursor:pointer}
+    .a{display:none; padding:1rem; color:var(--ink-muted); background:#111118}
+
+    footer{border-top:1px solid var(--line); color:var(--ink-muted); padding:1.5rem 0 3rem}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <nav>
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <strong>Wizarding Gallery</strong>
+        </div>
+        <ul class="menu">
+          <li class="active"><a href="#gallery">Gallery</a></li>
+          <li><a href="#houses">Houses</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Explore the Magic of Harry Potter</h1>
+    <p>Inspired by the clean, art-forward feel of the Frans Hals Museum website — this gallery highlights Hogwarts houses and iconic artifacts with subtle interactions powered by jQuery.</p>
+    <div class="cta">
+      <button class="button" id="revealArtifacts">Reveal Hidden Artifacts</button>
+      <button class="button" id="toggleOdd">Toggle Odd Cards</button>
+    </div>
+  </section>
+
+  <main class="wrap" id="gallery">
+    <div class="filters" id="houses">
+      <span class="chip active" data-house="all">All</span>
+      <span class="chip" data-house="gryffindor">Gryffindor</span>
+      <span class="chip" data-house="slytherin">Slytherin</span>
+      <span class="chip" data-house="ravenclaw">Ravenclaw</span>
+      <span class="chip" data-house="hufflepuff">Hufflepuff</span>
+    </div>
+
+    <div class="grid">
+      <!-- Cards (some start hidden to demonstrate animations) -->
+      <article class="card" data-house="gryffindor">
+        <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=1200&auto=format&fit=crop" alt="Gryffindor scarlet banner"/>
+        <div class="pad">
+          <span class="tag gryff"><span class="dot"></span>Gryffindor</span>
+          <h3>Marauder's Map</h3>
+          <p class="muted">Keeps track of everyone at Hogwarts… mischief managed.</p>
+        </div>
+      </article>
+
+      <article class="card" data-house="slytherin" style="display:none">
+        <img src="https://images.unsplash.com/photo-1520697222863-6e44bd2b524e?q=80&w=1200&auto=format&fit=crop" alt="Slytherin emerald banner"/>
+        <div class="pad">
+          <span class="tag slyth"><span class="dot"></span>Slytherin</span>
+          <h3>Salazar's Locket</h3>
+          <p class="muted">An heirloom with a dark past, sealed with Parseltongue.</p>
+        </div>
+      </article>
+
+      <article class="card" data-house="ravenclaw">
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Ravenclaw cobalt banner"/>
+        <div class="pad">
+          <span class="tag rav"><span class="dot"></span>Ravenclaw</span>
+          <h3>Diadem of Rowena</h3>
+          <p class="muted">Bestows wisdom to the worthy — if you can find it.</p>
+        </div>
+      </article>
+
+      <article class="card" data-house="hufflepuff" style="display:none">
+        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop" alt="Hufflepuff amber banner"/>
+        <div class="pad">
+          <span class="tag huff"><span class="dot"></span>Hufflepuff</span>
+          <h3>Hufflepuff's Cup</h3>
+          <p class="muted">A small cup with a large legacy in Helga’s house.</p>
+        </div>
+      </article>
+
+      <article class="card" data-house="gryffindor">
+        <img src="https://images.unsplash.com/photo-1519681390545-5c0b0e27c56e?q=80&w=1200&auto=format&fit=crop" alt="Gryffindor scarlet artifacts"/>
+        <div class="pad">
+          <span class="tag gryff"><span class="dot"></span>Gryffindor</span>
+          <h3>Sword of Gryffindor</h3>
+          <p class="muted">Goblin-made, appears to true Gryffindors in need.</p>
+        </div>
+      </article>
+
+      <article class="card" data-house="ravenclaw" style="display:none">
+        <img src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=1200&auto=format&fit=crop" alt="Ravenclaw artifacts"/>
+        <div class="pad">
+          <span class="tag rav"><span class="dot"></span>Ravenclaw</span>
+          <h3>Time-Turner</h3>
+          <p class="muted">A delicate device for revisiting hours past.</p>
+        </div>
+      </article>
+
+      <article class="card" data-house="slytherin">
+        <img src="https://images.unsplash.com/photo-1520975867597-0f0be8d3e682?q=80&w=1200&auto=format&fit=crop" alt="Slytherin artifacts"/>
+        <div class="pad">
+          <span class="tag slyth"><span class="dot"></span>Slytherin</span>
+          <h3>Basilisk Fang</h3>
+          <p class="muted">Venom potent enough to destroy a Horcrux.</p>
+        </div>
+      </article>
+    </div>
+
+    <section class="faq" id="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="qa">
+        <div class="q">Is this an official site?</div>
+        <div class="a">No — this is a student project inspired by the Frans Hals Museum aesthetic and built to demonstrate jQuery enhancements.</div>
+      </div>
+      <div class="qa">
+        <div class="q">How were the interactions made?</div>
+        <div class="a">jQuery selectors (including filters like <code>:odd</code> and <code>:has()</code>) plus effects like <code>slideToggle()</code> and <code>fadeIn()</code> power the UI.
+        </div>
+      </div>
+      <div class="qa">
+        <div class="q">Can I filter by Hogwarts house?</div>
+        <div class="a">Yes — use the chips above the gallery to show only Gryffindor, Slytherin, Ravenclaw, or Hufflepuff items.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <small>Images credit: Unsplash placeholders. Harry Potter™ is a trademark of its respective owners. Educational use.</small>
+  </footer>
+
+  <script>
+    // ===== jQuery Enhancements =====
+    $(function(){
+      // 1) Filtered selector: set alternating backgrounds for readability
+      $(".card:odd .pad").css("background","linear-gradient(180deg, #141420, #111118)");
+
+      // 2) House filter chips
+      $(".chip").on("click", function(){
+        $(".chip").removeClass("active");
+        $(this).addClass("active");
+        const house = $(this).data("house");
+        const $cards = $(".card");
+        if(house === "all"){ $cards.stop(true,true).fadeIn(180); }
+        else {
+          $cards.hide();
+          $cards.filter(`[data-house='${house}']`).fadeIn(200);
+        }
+        // Highlight active menu item (uses :contains filter example below)
+        $(".menu li").removeClass("active");
+        $(".menu li:contains('Houses')").addClass("active");
+      });
+
+      // 3) Reveal Hidden Artifacts button (progressive reveal)
+      $("#revealArtifacts").on("click", function(){
+        // :has() filter - only select cards that actually have an <img> inside
+        $(".card:has(img)[style*='display:none']").slice(0,2).fadeIn(220);
+      });
+
+      // 4) Toggle visibility of odd cards (demonstrates filter :odd)
+      let oddVisible = true;
+      $("#toggleOdd").on("click", function(){
+        const $oddCards = $(".card:odd");
+        oddVisible ? $oddCards.slideUp(180) : $oddCards.slideDown(180);
+        oddVisible = !oddVisible;
+      });
+
+      // 5) FAQ accordion with slideToggle
+      $(".q").on("click", function(){
+        const $qa = $(this).closest(".qa");
+        $qa.find(".a").stop(true,true).slideToggle(180);
+        $qa.siblings().find(".a:visible").slideUp(160);
+      });
+
+      // 6) Simple nav active state on click
+      $(".menu a").on("click", function(){
+        $(".menu li").removeClass("active");
+        $(this).parent().addClass("active");
+      });
+    });
+  </script>
+</body>
+</html>
