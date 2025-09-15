@@ -99,7 +99,7 @@
     </div>
 
     <div class="grid">
-      <!-- Cards (some start hidden to demonstrate animations) -->
+      <!-- Cards -->
       <article class="card" data-house="gryffindor">
         <img src="https://images.unsplash.com/photo-1654344009476-09872e6243a1?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Gryffindor scarlet banner"/>
         <div class="pad">
@@ -189,10 +189,10 @@
   <script>
     // ===== jQuery Enhancements =====
     $(function(){
-      // 1) Filtered selector: set alternating backgrounds for readability
+      // 1) Filtered selector
       $(".card:odd .pad").css("background","linear-gradient(180deg, #141420, #111118)");
 
-      // 2) House filter chips
+      // 2) House filter tabs
       $(".chip").on("click", function(){
         $(".chip").removeClass("active");
         $(this).addClass("active");
@@ -203,18 +203,18 @@
           $cards.hide();
           $cards.filter(`[data-house='${house}']`).fadeIn(200);
         }
-        // Highlight active menu item (uses :contains filter example below)
+        // Highlight active menu item 
         $(".menu li").removeClass("active");
         $(".menu li:contains('Houses')").addClass("active");
       });
 
-      // 3) Reveal Hidden Artifacts button (progressive reveal)
+      // 3) Reveal Hidden Artifacts button 
       $("#revealArtifacts").on("click", function(){
         // :has() filter - only select cards that actually have an <img> inside
         $(".card:has(img)[style*='display:none']").slice(0,2).fadeIn(220);
       });
 
-      // 4) Toggle visibility of odd cards (demonstrates filter :odd)
+      // 4) Toggle visibility of odd cards 
       let oddVisible = true;
       $("#toggleOdd").on("click", function(){
         const $oddCards = $(".card:odd");
@@ -222,7 +222,7 @@
         oddVisible = !oddVisible;
       });
 
-      // 5) FAQ accordion with slideToggle
+      // 5) FAQ 
       $(".q").on("click", function(){
         const $qa = $(this).closest(".qa");
         $qa.find(".a").stop(true,true).slideToggle(180);
