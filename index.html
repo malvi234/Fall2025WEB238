@@ -61,6 +61,23 @@
     .a{display:none; padding:1rem; color:var(--ink-muted); background:#111118}
 
     footer{border-top:1px solid var(--line); color:var(--ink-muted); padding:1.5rem 0 3rem}
+
+    /* === Lab 4: Interactive Gallery (prefixed with ig-) === */
+    .ig-gallery { background: var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; margin: 1.25rem 0; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .ig-hero { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; border-radius: 12px; background: #0b0f16; }
+    .ig-hero img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+    .ig-controls { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:12px; flex-wrap:wrap; }
+    .ig-btns { display:flex; gap:8px; }
+    .ig-gallery button { appearance:none; border:1px solid var(--line); background:#111827; color:var(--ink); padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:600; transition:transform .08s ease, background .2s ease; }
+    .ig-gallery button:hover { background:#0f172a; }
+    .ig-gallery button:active { transform: translateY(1px) scale(.99); }
+    .ig-thumbs { display:grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap:8px; width:100%; }
+    .ig-thumb { position:relative; border-radius:10px; overflow:hidden; border:2px solid transparent; cursor:pointer; }
+    .ig-thumb img { width:100%; height:100%; object-fit:cover; display:block; transition: transform .25s ease; }
+    .ig-thumb:hover img { transform: scale(1.05); }
+    .ig-thumb.active { border-color:#60a5fa; }
+    @media (max-width: 640px){ .ig-thumbs { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+    .ig-thumb:focus-visible, .ig-gallery button:focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }
   </style>
 </head>
 <body>
@@ -90,6 +107,41 @@
   </section>
 
   <main class="wrap" id="gallery">
+    <!-- === Lab 4: Interactive Image Showcase (jQuery, ig- prefixed) === -->
+    <section id="interactive-gallery" class="ig-gallery" aria-label="Interactive gallery">
+      <div class="ig-hero" aria-live="polite">
+        <img id="ig-hero-img" src="" alt="" />
+      </div>
+
+      <div class="ig-controls" role="group" aria-label="Gallery controls">
+        <div class="ig-btns">
+          <button type="button" id="ig-prev" aria-label="Previous image">◀ Prev</button>
+          <button type="button" id="ig-next" aria-label="Next image">Next ▶</button>
+        </div>
+        <div class="ig-btns">
+          <button type="button" id="ig-toggle-play" aria-pressed="false" aria-label="Start slideshow">▶ Play</button>
+        </div>
+        <div class="ig-thumbs" id="ig-thumbs" aria-label="Choose an image">
+          <button class="ig-thumb active" data-index="0" aria-label="Gryffindor scarlet banner">
+            <img src="https://images.unsplash.com/photo-1654344009476-09872e6243a1?q=80&w=400&auto=format&fit=crop" alt="Gryffindor banner thumbnail" />
+          </button>
+          <button class="ig-thumb" data-index="1" aria-label="Ravenclaw cobalt banner">
+            <img src="https://images.unsplash.com/photo-1594399429950-3bc814d4081c?q=80&w=400&auto=format&fit=crop" alt="Ravenclaw banner thumbnail" />
+          </button>
+          <button class="ig-thumb" data-index="2" aria-label="Gryffindor artifacts">
+            <img src="https://images.unsplash.com/photo-1594399430386-913fd5defaa4?q=80&w=400&auto=format&fit=crop" alt="Gryffindor artifacts thumbnail" />
+          </button>
+          <button class="ig-thumb" data-index="3" aria-label="Ravenclaw artifacts">
+            <img src="https://images.unsplash.com/photo-1632266484284-a11d9e3a460a?q=80&w=400&auto=format&fit=crop" alt="Ravenclaw artifacts thumbnail" />
+          </button>
+          <button class="ig-thumb" data-index="4" aria-label="Slytherin artifacts">
+            <img src="https://images.unsplash.com/photo-1667018357689-6dda5e5f3dd6?q=80&w=400&auto=format&fit=crop" alt="Slytherin artifacts thumbnail" />
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Your existing filters / cards -->
     <div class="filters" id="houses">
       <span class="chip active" data-house="all">All</span>
       <span class="chip" data-house="gryffindor">Gryffindor</span>
@@ -186,6 +238,7 @@
     <small>Harry Potter™ is a trademark of its respective owners. Educational use.</small>
   </footer>
 
+  <!-- Your existing jQuery enhancements -->
   <script>
     // ===== jQuery Enhancements =====
     $(function(){
@@ -233,6 +286,72 @@
       $(".menu a").on("click", function(){
         $(".menu li").removeClass("active");
         $(this).parent().addClass("active");
+      });
+    });
+  </script>
+
+  <!-- Lab 4 interactive gallery logic (separate block; safe to keep both) -->
+  <script>
+    // === Lab 4: Interactive Gallery logic (jQuery, ig- prefixed) ===
+    $(function(){
+      const images = [
+        { src: "https://images.unsplash.com/photo-1654344009476-09872e6243a1?q=80&w=1600&auto=format&fit=crop", alt: "Gryffindor scarlet banner" },
+        { src: "https://images.unsplash.com/photo-1594399429950-3bc814d4081c?q=80&w=1600&auto=format&fit=crop", alt: "Ravenclaw cobalt banner" },
+        { src: "https://images.unsplash.com/photo-1594399430386-913fd5defaa4?q=80&w=1600&auto=format&fit=crop", alt: "Gryffindor artifacts" },
+        { src: "https://images.unsplash.com/photo-1632266484284-a11d9e3a460a?q=80&w=1600&auto=format&fit=crop", alt: "Ravenclaw artifacts" },
+        { src: "https://images.unsplash.com/photo-1667018357689-6dda5e5f3dd6?q=80&w=1600&auto=format&fit=crop", alt: "Slytherin artifacts" }
+      ];
+
+      let current = 0;
+      let playing = false;
+      let timerId = null;
+
+      const $hero = $("#ig-hero-img");
+      const $thumbs = $("#ig-thumbs .ig-thumb");
+
+      // Initialize
+      $hero.attr({ src: images[0].src, alt: images[0].alt }).css({ left: 0, opacity: 1 });
+      $thumbs.attr("tabindex", 0);
+
+      function goTo(index, direction = 1){
+        if(index === current) return;
+        current = (index + images.length) % images.length;
+
+        const width = $(".ig-hero").width();
+        const toX = -direction * width;
+
+        // Slide/Fade out, swap, slide/fade in
+        $hero.stop(true,true).animate({ left: toX, opacity: 0 }, 240, "swing", function(){
+          $hero.attr({ src: images[current].src, alt: images[current].alt, style: "left:" + (direction*width) + "px; opacity:0" });
+          $hero.animate({ left: 0, opacity: 1 }, 260);
+        });
+
+        $thumbs.removeClass("active").eq(current).addClass("active");
+      }
+
+      function next(){ goTo(current + 1, 1); }
+      function prev(){ goTo(current - 1, -1); }
+
+      $("#ig-next").on("click", next);
+      $("#ig-prev").on("click", prev);
+
+      $thumbs.on("click keydown", function(e){
+        if(e.type === "click" || e.key === "Enter" || e.key === " "){
+          const idx = parseInt($(this).data("index"), 10);
+          const dir = (idx > current) ? 1 : -1;
+          goTo(idx, dir);
+        }
+      });
+
+      $(document).on("keydown", function(e){
+        if(e.key === "ArrowRight") next();
+        if(e.key === "ArrowLeft") prev();
+      });
+
+      $("#ig-toggle-play").on("click", function(){
+        playing = !playing;
+        $(this).attr("aria-pressed", String(playing)).text(playing ? "⏸ Pause" : "▶ Play");
+        if(playing){ timerId = setInterval(next, 3000); } else { clearInterval(timerId); timerId = null; }
       });
     });
   </script>
