@@ -107,7 +107,7 @@
   </section>
 
   <main class="wrap" id="gallery">
-    <!-- === Lab 4: Interactive Image Showcase (jQuery, ig- prefixed) === -->
+  
     <section id="interactive-gallery" class="ig-gallery" aria-label="Interactive gallery">
       <div class="ig-hero" aria-live="polite">
         <img id="ig-hero-img" src="" alt="" />
@@ -141,7 +141,6 @@
       </div>
     </section>
 
-    <!-- Your existing filters / cards -->
     <div class="filters" id="houses">
       <span class="chip active" data-house="all">All</span>
       <span class="chip" data-house="gryffindor">Gryffindor</span>
@@ -150,8 +149,8 @@
       <span class="chip" data-house="hufflepuff">Hufflepuff</span>
     </div>
 
-    <div class="grid">
-      <!-- Cards -->
+    <div class="grid"
+      
       <article class="card" data-house="gryffindor">
         <img src="https://images.unsplash.com/photo-1654344009476-09872e6243a1?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Gryffindor scarlet banner"/>
         <div class="pad">
@@ -238,14 +237,13 @@
     <small>Harry Potter™ is a trademark of its respective owners. Educational use.</small>
   </footer>
 
-  <!-- Your existing jQuery enhancements -->
   <script>
-    // ===== jQuery Enhancements =====
+  
     $(function(){
-      // 1) Filtered selector
+      
       $(".card:odd .pad").css("background","linear-gradient(180deg, #141420, #111118)");
 
-      // 2) House filter tabs
+    
       $(".chip").on("click", function(){
         $(".chip").removeClass("active");
         $(this).addClass("active");
@@ -256,18 +254,16 @@
           $cards.hide();
           $cards.filter(`[data-house='${house}']`).fadeIn(200);
         }
-        // Highlight active menu item 
+        
         $(".menu li").removeClass("active");
         $(".menu li:contains('Houses')").addClass("active");
       });
 
-      // 3) Reveal Hidden Artifacts button 
       $("#revealArtifacts").on("click", function(){
-        // :has() filter - only select cards that actually have an <img> inside
+      
         $(".card:has(img)[style*='display:none']").slice(0,2).fadeIn(220);
       });
 
-      // 4) Toggle visibility of odd cards 
       let oddVisible = true;
       $("#toggleOdd").on("click", function(){
         const $oddCards = $(".card:odd");
@@ -275,14 +271,12 @@
         oddVisible = !oddVisible;
       });
 
-      // 5) FAQ 
       $(".q").on("click", function(){
         const $qa = $(this).closest(".qa");
         $qa.find(".a").stop(true,true).slideToggle(180);
         $qa.siblings().find(".a:visible").slideUp(160);
       });
 
-      // 6) Simple nav active state on click
       $(".menu a").on("click", function(){
         $(".menu li").removeClass("active");
         $(this).parent().addClass("active");
@@ -290,9 +284,7 @@
     });
   </script>
 
-  <!-- Lab 4 interactive gallery logic (separate block; safe to keep both) -->
   <script>
-    // === Lab 4: Interactive Gallery logic (jQuery, ig- prefixed) ===
     $(function(){
       const images = [
         { src: "https://images.unsplash.com/photo-1654344009476-09872e6243a1?q=80&w=1600&auto=format&fit=crop", alt: "Gryffindor scarlet banner" },
@@ -309,7 +301,6 @@
       const $hero = $("#ig-hero-img");
       const $thumbs = $("#ig-thumbs .ig-thumb");
 
-      // Initialize
       $hero.attr({ src: images[0].src, alt: images[0].alt }).css({ left: 0, opacity: 1 });
       $thumbs.attr("tabindex", 0);
 
@@ -320,7 +311,7 @@
         const width = $(".ig-hero").width();
         const toX = -direction * width;
 
-        // Slide/Fade out, swap, slide/fade in
+      
         $hero.stop(true,true).animate({ left: toX, opacity: 0 }, 240, "swing", function(){
           $hero.attr({ src: images[current].src, alt: images[current].alt, style: "left:" + (direction*width) + "px; opacity:0" });
           $hero.animate({ left: 0, opacity: 1 }, 260);
