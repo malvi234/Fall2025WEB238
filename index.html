@@ -78,6 +78,34 @@
     .ig-thumb.active { border-color:#60a5fa; }
     @media (max-width: 640px){ .ig-thumbs { grid-template-columns: repeat(3, minmax(0,1fr)); } }
     .ig-thumb:focus-visible, .ig-gallery button:focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }
+
+    /* ================================
+       UPDATES: tighter Houses section
+       ================================ */
+
+    /* 1) Smaller/tighter chips within the Houses filter bar */
+    #houses {
+      gap: .4rem;               /* tighter than default .5rem */
+      margin: .5rem 0 1rem;     /* pull section closer to content */
+    }
+    #houses .chip {
+      padding: .32rem .6rem;    /* was .45rem .75rem */
+      font-size: .9rem;         /* slightly smaller text */
+      border-radius: 999px;
+    }
+
+    /* 2) Make cards feel a touch lighter so chips don't feel oversized */
+    .grid { gap: .8rem; }       /* was 1rem */
+    .card img { height: 170px; }/* was 200px */
+    @media (min-width: 1000px){
+      .card img { height: 160px; }
+    }
+
+    /* 3) Extra-compact chips on small phones */
+    @media (max-width: 480px) {
+      #houses .chip { font-size: .82rem; padding: .25rem .5rem; }
+      #houses { margin: .4rem 0 .8rem; }
+    }
   </style>
 </head>
 <body>
@@ -149,8 +177,8 @@
       <span class="chip" data-house="hufflepuff">Hufflepuff</span>
     </div>
 
-    <div class="grid"
-      
+    <!-- FIXED: added the missing '>' here -->
+    <div class="grid">
       <article class="card" data-house="gryffindor">
         <img src="https://images.unsplash.com/photo-1654344009476-09872e6243a1?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Gryffindor scarlet banner"/>
         <div class="pad">
@@ -233,118 +261,4 @@
     </section>
   </main>
 
-  <footer class="wrap">
-    <small>Harry Potter™ is a trademark of its respective owners. Educational use.</small>
-  </footer>
-
-  <script>
-  
-    $(function(){
-      
-      $(".card:odd .pad").css("background","linear-gradient(180deg, #141420, #111118)");
-
-    
-      $(".chip").on("click", function(){
-        $(".chip").removeClass("active");
-        $(this).addClass("active");
-        const house = $(this).data("house");
-        const $cards = $(".card");
-        if(house === "all"){ $cards.stop(true,true).fadeIn(180); }
-        else {
-          $cards.hide();
-          $cards.filter(`[data-house='${house}']`).fadeIn(200);
-        }
-        
-        $(".menu li").removeClass("active");
-        $(".menu li:contains('Houses')").addClass("active");
-      });
-
-      $("#revealArtifacts").on("click", function(){
-      
-        $(".card:has(img)[style*='display:none']").slice(0,2).fadeIn(220);
-      });
-
-      let oddVisible = true;
-      $("#toggleOdd").on("click", function(){
-        const $oddCards = $(".card:odd");
-        oddVisible ? $oddCards.slideUp(180) : $oddCards.slideDown(180);
-        oddVisible = !oddVisible;
-      });
-
-      $(".q").on("click", function(){
-        const $qa = $(this).closest(".qa");
-        $qa.find(".a").stop(true,true).slideToggle(180);
-        $qa.siblings().find(".a:visible").slideUp(160);
-      });
-
-      $(".menu a").on("click", function(){
-        $(".menu li").removeClass("active");
-        $(this).parent().addClass("active");
-      });
-    });
-  </script>
-
-  <script>
-    $(function(){
-      const images = [
-        { src: "https://images.unsplash.com/photo-1654344009476-09872e6243a1?q=80&w=1600&auto=format&fit=crop", alt: "Gryffindor scarlet banner" },
-        { src: "https://images.unsplash.com/photo-1594399429950-3bc814d4081c?q=80&w=1600&auto=format&fit=crop", alt: "Ravenclaw cobalt banner" },
-        { src: "https://images.unsplash.com/photo-1594399430386-913fd5defaa4?q=80&w=1600&auto=format&fit=crop", alt: "Gryffindor artifacts" },
-        { src: "https://images.unsplash.com/photo-1632266484284-a11d9e3a460a?q=80&w=1600&auto=format&fit=crop", alt: "Ravenclaw artifacts" },
-        { src: "https://images.unsplash.com/photo-1667018357689-6dda5e5f3dd6?q=80&w=1600&auto=format&fit=crop", alt: "Slytherin artifacts" }
-      ];
-
-      let current = 0;
-      let playing = false;
-      let timerId = null;
-
-      const $hero = $("#ig-hero-img");
-      const $thumbs = $("#ig-thumbs .ig-thumb");
-
-      $hero.attr({ src: images[0].src, alt: images[0].alt }).css({ left: 0, opacity: 1 });
-      $thumbs.attr("tabindex", 0);
-
-      function goTo(index, direction = 1){
-        if(index === current) return;
-        current = (index + images.length) % images.length;
-
-        const width = $(".ig-hero").width();
-        const toX = -direction * width;
-
-      
-        $hero.stop(true,true).animate({ left: toX, opacity: 0 }, 240, "swing", function(){
-          $hero.attr({ src: images[current].src, alt: images[current].alt, style: "left:" + (direction*width) + "px; opacity:0" });
-          $hero.animate({ left: 0, opacity: 1 }, 260);
-        });
-
-        $thumbs.removeClass("active").eq(current).addClass("active");
-      }
-
-      function next(){ goTo(current + 1, 1); }
-      function prev(){ goTo(current - 1, -1); }
-
-      $("#ig-next").on("click", next);
-      $("#ig-prev").on("click", prev);
-
-      $thumbs.on("click keydown", function(e){
-        if(e.type === "click" || e.key === "Enter" || e.key === " "){
-          const idx = parseInt($(this).data("index"), 10);
-          const dir = (idx > current) ? 1 : -1;
-          goTo(idx, dir);
-        }
-      });
-
-      $(document).on("keydown", function(e){
-        if(e.key === "ArrowRight") next();
-        if(e.key === "ArrowLeft") prev();
-      });
-
-      $("#ig-toggle-play").on("click", function(){
-        playing = !playing;
-        $(this).attr("aria-pressed", String(playing)).text(playing ? "⏸ Pause" : "▶ Play");
-        if(playing){ timerId = setInterval(next, 3000); } else { clearInterval(timerId); timerId = null; }
-      });
-    });
-  </script>
-</body>
-</html>
+  <foot
