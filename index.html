@@ -62,7 +62,6 @@
 
     footer{border-top:1px solid var(--line); color:var(--ink-muted); padding:1.5rem 0 3rem}
 
-    /* === Lab 4: Interactive Gallery (prefixed with ig-) === */
     .ig-gallery { background: var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; margin: 1.25rem 0; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
     .ig-hero { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; border-radius: 12px; background: #0b0f16; }
     .ig-hero img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
@@ -79,18 +78,13 @@
     @media (max-width: 640px){ .ig-thumbs { grid-template-columns: repeat(3, minmax(0,1fr)); } }
     .ig-thumb:focus-visible, .ig-gallery button:focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }
 
-    /* ================================
-       UPDATES: tighter Houses section
-       ================================ */
     #houses { gap: .4rem; margin: .5rem 0 1rem; }
     #houses .chip { padding: .32rem .6rem; font-size: .9rem; border-radius: 999px; }
 
-    /* lighter cards so chips feel proportionate */
     .grid { gap: .8rem; }
     @media (min-width: 1000px){ .card img { height: 160px; } }
-    .card img { height: 170px; } /* default smaller than 200px */
+    .card img { height: 170px; } 
 
-    /* extra-compact chips on small phones */
     @media (max-width: 480px) {
       #houses .chip { font-size: .82rem; padding: .25rem .5rem; }
       #houses { margin: .4rem 0 .8rem; }
@@ -251,13 +245,10 @@
     <small>Harry Potter™ is a trademark of its respective owners. Educational use.</small>
   </footer>
 
-  <!-- ===== Script #1: chips, toggles, FAQ, etc. ===== -->
   <script>
     $(function () {
-      // Alternate background on odd cards
       $(".card:odd .pad").css("background","linear-gradient(180deg, #141420, #111118)");
 
-      // House filter chips
       $(".chip").on("click", function(){
         $(".chip").removeClass("active");
         $(this).addClass("active");
@@ -273,12 +264,10 @@
         $(".menu li:contains('Houses')").addClass("active");
       });
 
-      // Reveal hidden artifacts (first two currently hidden cards)
       $("#revealArtifacts").on("click", function(){
         $(".card:hidden").slice(0,2).fadeIn(220);
       });
 
-      // Toggle odd cards
       let oddVisible = true;
       $("#toggleOdd").on("click", function(){
         const $oddCards = $(".card:odd");
@@ -286,14 +275,12 @@
         oddVisible = !oddVisible;
       });
 
-      // FAQ accordion (one open at a time)
       $(".q").on("click", function(){
         const $qa = $(this).closest(".qa");
         $qa.find(".a").stop(true,true).slideToggle(180);
         $qa.siblings().find(".a:visible").slideUp(160);
       });
 
-      // Active menu highlight
       $(".menu a").on("click", function(){
         $(".menu li").removeClass("active");
         $(this).parent().addClass("active");
@@ -301,7 +288,6 @@
     });
   </script>
 
-  <!-- ===== Script #2: interactive gallery (hero + thumbs + autoplay) ===== -->
   <script>
     $(function () {
       const images = [
@@ -318,14 +304,12 @@
       const $prev = $("#ig-prev");
       const $play = $("#ig-toggle-play");
 
-      // If hero or thumbs are missing, bail gracefully
       if (!$hero.length || !$thumbs.length) return;
 
       let current = 0;
       let playing = false;
       let timerId = null;
 
-      // Initialize hero image
       $hero.attr({ src: images[0].src, alt: images[0].alt }).css({ left: 0, opacity: 1 });
       $thumbs.attr("tabindex", 0);
 
