@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Korean Skincare Essentials</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #fff8fd;
+            color: #333;
+        }
+
+        header {
+            background: #ffcee7;
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
+
+        section {
+            padding: 40px 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #d25398;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .product {
+            position: relative;
+            background: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            cursor: pointer;
+        }
+
+            .product img {
+                width: 100%;
+                border-radius: 10px;
+            }
+
+        .description {
+            display: none;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .step {
+            margin-bottom: 10px;
+            padding: 15px;
+            background: #ffeaf5;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .step-details {
+            display: none;
+            margin-top: 10px;
+        }
+
+        #showRec {
+            display: block;
+            margin: 25px auto;
+            padding: 12px 20px;
+            background: #d94c9b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        #recommendation {
+            display: none;
+            margin-top: 20px;
+            background: #ffe5f2;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        #modalOverlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+        }
+
+        #modalBox {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 25px;
+            width: 85%;
+            max-width: 400px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        footer {
+            padding: 20px;
+            background: #ffcee7;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        button.closeModal {
+            margin-top: 20px;
+            padding: 10px 18px;
+            background: #d94c9b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>My Korean Skincare Essentials</h1>
+        <nav>
+            <a href="#intro">Intro</a>
+            <a href="#favorites">Favorites</a>
+            <a href="#routine">Routine</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <section id="intro">
+        <h2>Why I Love Korean Skincare</h2>
+        <p style="text-align:center; max-width:600px; margin:auto;">
+            Korean skincare focuses on gentle ingredients, hydration, and long-term results.
+            My skin has never looked better since I have adopted this routine!
+            Here are some of my favorite products and a look into my personal routine.
+        </p>
+    </section>
+
+    <section id="favorites">
+        <h2>My Favorite Products</h2>
+
+        <div class="gallery">
+            <div class="product">
+                <img src="images/vtreedleshot.jpg" alt="VT Reedle Shot">
+                <div class="description">This serum has microneedles which can penetrate the skin to allow clearer, smoother skin. </div>
+            </div>
+
+            <div class="product">
+                <img src="images/anucleansing.jpg" alt="Anua Cleansing Oil">
+                <div class="description">This cleansing oil will get rid of any dead skin, debris, and makeup for clean skin.</div>
+            </div>
+
+            <div class="product">
+                <img src="images/cream.jpg" alt="Illiyoon Cream">
+                <div class="description">This cream provides intense hydration leaving your skin looking glossy, moisturized, and plump.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="routine">
+        <h2>My Skincare Routine</h2>
+
+        <div class="step">
+            Step 1: Cleanser
+            <div class="step-details">For the first step, I will usually do double cleansing. 
+            I first go in with the Anu Cleansing oil to remove dirt, makeup, and any excess oil or dead skin off of my face.
+            Then I will go in with my Dokdo Cleanser and lather it in my hands until it turns to foam to remove any excess dirt from my face.</div>
+        </div>
+
+        <div class="step">
+            Step 2: Toner
+            <div class="step-details">I use the Klairs toner for sensitive skin. 
+            This helps balance your pH levels and brings back hydration to the skin.</div>
+        </div>
+
+        <div class="step">
+            Step 3: Essence
+            <div class="step-details">For this step I use the Klair Vitamin C serum.
+            This helps improve skin tone and will brighten the skin.</div>
+        </div>
+
+        <div class="step">
+            Step 4: Moisturizer
+            <div class="step-details">For my last step I will use my Illiyoon cream to moisturize my skin.
+            This can help repair your skin barrier and is great for sensitive skin.</div>
+        </div>
+
+        <button id="showRec">Show My Top Recommendation</button>
+
+        <div id="recommendation">
+            <h3>⭐ Sungboon Editor Collagen Mask</h3>
+            <p>This is super hydrating, ani-wrinkle and lifting, and provides real collagen to the skin.</p>
+        </div>
+
+        <br>
+        <button id="openModal" style="margin-top:20px;">What is Double Cleansing?</button>
+    </section>
+
+    <div id="modalOverlay"></div>
+
+    <div id="modalBox">
+        <h3>What is Double Cleansing?</h3>
+        <p>Double cleansing uses an oil cleanser first to remove makeup and sunscreen, followed by a water-based cleanser to clean the skin thoroughly.</p>
+        <button class="closeModal">Close</button>
+    </div>
+
+    <footer id="contact">
+        <p>Created by Madina • JQuery Final Project</p>
+    </footer>
+
+
+
+    <script>
+        $("nav a").on("click", function(e) {
+            e.preventDefault();
+            let sectionID = $(this).attr("href");
+            $("html, body").animate({
+                scrollTop: $(sectionID).offset().top - 20
+            }, 600);
+        });
+
+        $(".product").hover(
+            function() {
+                $(this).find(".description").stop().fadeIn();
+            },
+            function() {
+                $(this).find(".description").stop().fadeOut();
+            }
+        );
+
+        $(".step").on("click", function() {
+            $(this).find(".step-details").slideToggle();
+        });
+
+        $("#showRec").on("click", function() {
+            $("#recommendation").fadeIn(800);
+        });
+
+        $("#openModal").on("click", function() {
+            $("#modalOverlay").fadeIn(300);
+            $("#modalBox").fadeIn(400);
+        });
+
+        $(".closeModal, #modalOverlay").on("click", function() {
+            $("#modalOverlay").fadeOut(300);
+            $("#modalBox").fadeOut(300);
+        });
+    </script>
+
+</body>
+</html>
