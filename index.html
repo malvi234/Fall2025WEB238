@@ -1,366 +1,279 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Harry Potter — Wizarding Gallery</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-  <style>
-    :root{
-      --bg:#0e0e12; --ink:#f6f6f6; --ink-muted:#c9cad1; --accent:#d4af37; --card:#15151d; --line:#262633;
-      --gryff:#a21c1c; --slyth:#0f5132; --rav:#1d4ed8; --huff:#b7791f;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0; background:var(--bg); color:var(--ink); font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
-    a{color:inherit; text-decoration:none}
-    header{
-      position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(10px);
-      background:rgba(14,14,18,.7); border-bottom:1px solid var(--line);
-    }
-    .wrap{max-width:1100px; margin:0 auto; padding:1rem 1.25rem}
-    .brand{display:flex; align-items:center; gap:.75rem}
-    .brand .logo{width:36px; height:36px; background:radial-gradient(circle at 30% 30%, var(--accent), transparent 60%), linear-gradient(135deg,#222, #111); border-radius:8px}
-    nav{display:flex; gap:1rem; align-items:center; justify-content:space-between}
-    .menu{display:flex; gap:1rem; list-style:none; margin:0; padding:0}
-    .menu li{padding:.4rem .7rem; border-radius:999px; transition:transform .15s ease}
-    .menu li:hover{transform:translateY(-1px)}
-    .menu li.active{outline:1px solid var(--accent); background:rgba(212,175,55,.1)}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Korean Skincare Essentials</title>
 
-    .hero{display:grid; place-items:center; text-align:center; padding:5rem 1.25rem 3rem; border-bottom:1px solid var(--line); background:radial-gradient(1000px 400px at 50% 0%, rgba(212,175,55,.08), transparent 60%)}
-    .hero h1{font-family:"Playfair Display", serif; font-size:clamp(2rem, 6vw, 3.5rem); letter-spacing:.5px; margin:.3rem 0 .6rem}
-    .hero p{color:var(--ink-muted); max-width:52ch; margin:0 auto 1.25rem}
-    .hero .cta{display:flex; gap:.75rem; justify-content:center}
-    .button{border:1px solid var(--accent); background:rgba(212,175,55,.1); color:var(--ink); padding:.7rem 1rem; border-radius:10px; cursor:pointer}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-    .filters{display:flex; gap:.5rem; flex-wrap:wrap; padding:1rem 0; border-bottom:1px solid var(--line)}
-    .chip{border:1px solid var(--line); background:var(--card); padding:.45rem .75rem; border-radius:999px; cursor:pointer; transition:all .15s}
-    .chip.active{border-color:var(--accent); box-shadow:0 0 0 2px rgba(212,175,55,.12) inset}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    .grid{display:grid; grid-template-columns:repeat(12,1fr); gap:1rem; padding:1.25rem 0 3rem}
-    .card{grid-column:span 12; background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden; transition:transform .2s ease, box-shadow .2s ease}
-    .card:hover{transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.25)}
-    .card img{width:100%; height:200px; object-fit:cover}
-    .card .pad{padding:1rem}
-    .tag{display:inline-flex; align-items:center; gap:.35rem; font-size:.8rem; color:#e9e9ef; padding:.25rem .55rem; border-radius:999px; border:1px solid var(--line)}
-    .tag .dot{width:8px; height:8px; border-radius:50%}
-    .tag.gryff .dot{background:var(--gryff)}
-    .tag.slyth .dot{background:var(--slyth)}
-    .tag.rav .dot{background:var(--rav)}
-    .tag.huff .dot{background:var(--huff)}
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #fff8fd;
+            color: #333;
+        }
 
-    @media (min-width:700px){ .card{grid-column:span 6} }
-    @media (min-width:1000px){ .card{grid-column:span 4} }
+        header {
+            background: #ffcee7;
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    .faq{border-top:1px solid var(--line); padding:2rem 0}
-    .faq h2{font-family:"Playfair Display", serif; margin:.2rem 0 1rem}
-    .qa{border:1px solid var(--line); border-radius:12px; margin:.75rem 0; overflow:hidden}
-    .q{padding:1rem; background:linear-gradient(180deg, #171722, #14141c); cursor:pointer}
-    .a{display:none; padding:1rem; color:var(--ink-muted); background:#111118}
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
 
-    footer{border-top:1px solid var(--line); color:var(--ink-muted); padding:1.5rem 0 3rem}
+        section {
+            padding: 40px 20px;
+        }
 
-    .ig-gallery { background: var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; margin: 1.25rem 0; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
-    .ig-hero { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; border-radius: 12px; background: #0b0f16; }
-    .ig-hero img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-    .ig-controls { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:12px; flex-wrap:wrap; }
-    .ig-btns { display:flex; gap:8px; }
-    .ig-gallery button { appearance:none; border:1px solid var(--line); background:#111827; color:var(--ink); padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:600; transition:transform .08s ease, background .2s ease; }
-    .ig-gallery button:hover { background:#0f172a; }
-    .ig-gallery button:active { transform: translateY(1px) scale(.99); }
-    .ig-thumbs { display:grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap:8px; width:100%; }
-    .ig-thumb { position:relative; border-radius:10px; overflow:hidden; border:2px solid transparent; cursor:pointer; }
-    .ig-thumb img { width:100%; height:100%; object-fit:cover; display:block; transition: transform .25s ease; }
-    .ig-thumb:hover img { transform: scale(1.05); }
-    .ig-thumb.active { border-color:#60a5fa; }
-    @media (max-width: 640px){ .ig-thumbs { grid-template-columns: repeat(3, minmax(0,1fr)); } }
-    .ig-thumb:focus-visible, .ig-gallery button:focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #d25398;
+        }
 
-    #houses { gap: .4rem; margin: .5rem 0 1rem; }
-    #houses .chip { padding: .32rem .6rem; font-size: .9rem; border-radius: 999px; }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
 
-    .grid { gap: .8rem; }
-    @media (min-width: 1000px){ .card img { height: 160px; } }
-    .card img { height: 170px; } 
+        .product {
+            position: relative;
+            background: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            cursor: pointer;
+        }
 
-    @media (max-width: 480px) {
-      #houses .chip { font-size: .82rem; padding: .25rem .5rem; }
-      #houses { margin: .4rem 0 .8rem; }
-    }
-  </style>
+            .product img {
+                width: 100%;
+                border-radius: 10px;
+            }
+
+        .description {
+            display: none;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .step {
+            margin-bottom: 10px;
+            padding: 15px;
+            background: #ffeaf5;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .step-details {
+            display: none;
+            margin-top: 10px;
+        }
+
+        #showRec {
+            display: block;
+            margin: 25px auto;
+            padding: 12px 20px;
+            background: #d94c9b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        #recommendation {
+            display: none;
+            margin-top: 20px;
+            background: #ffe5f2;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        #modalOverlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+        }
+
+        #modalBox {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 25px;
+            width: 85%;
+            max-width: 400px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        footer {
+            padding: 20px;
+            background: #ffcee7;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        button.closeModal {
+            margin-top: 20px;
+            padding: 10px 18px;
+            background: #d94c9b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
 </head>
+
 <body>
-  <header>
-    <div class="wrap">
-      <nav>
-        <div class="brand">
-          <div class="logo" aria-hidden="true"></div>
-          <strong>Wizarding Gallery</strong>
-        </div>
-        <ul class="menu">
-          <li class="active"><a href="#gallery">Gallery</a></li>
-          <li><a href="#houses">Houses</a></li>
-          <li><a href="#faq">FAQ</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
 
-  <section class="hero">
-    <h1>Explore the Magic of Harry Potter</h1>
-    <p>Inspired by the clean, art-forward feel of the Frans Hals Museum website — this gallery highlights Hogwarts houses and iconic artifacts with subtle interactions powered by jQuery.</p>
-    <div class="cta">
-      <button class="button" id="revealArtifacts">Reveal Hidden Artifacts</button>
-      <button class="button" id="toggleOdd">Toggle Odd Cards</button>
-    </div>
-  </section>
+    <header>
+        <h1>My Korean Skincare Essentials</h1>
+        <nav>
+            <a href="#intro">Intro</a>
+            <a href="#favorites">Favorites</a>
+            <a href="#routine">Routine</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
 
-  <main class="wrap" id="gallery">
-    <section id="interactive-gallery" class="ig-gallery" aria-label="Interactive gallery">
-      <div class="ig-hero" aria-live="polite">
-        <img id="ig-hero-img" src="" alt="" />
-      </div>
-
-      <div class="ig-controls" role="group" aria-label="Gallery controls">
-        <div class="ig-btns">
-          <button type="button" id="ig-prev" aria-label="Previous image">◀ Prev</button>
-          <button type="button" id="ig-next" aria-label="Next image">Next ▶</button>
-        </div>
-        <div class="ig-btns">
-          <button type="button" id="ig-toggle-play" aria-pressed="false" aria-label="Start slideshow">▶ Play</button>
-        </div>
-        <div class="ig-thumbs" id="ig-thumbs" aria-label="Choose an image">
-          <button class="ig-thumb active" data-index="0" aria-label="Gryffindor scarlet banner">
-            <img src="https://images.unsplash.com/photo-1654344009476-09872e6243a1?q=80&w=400&auto=format&fit=crop" alt="Gryffindor banner thumbnail" />
-          </button>
-          <button class="ig-thumb" data-index="1" aria-label="Ravenclaw cobalt banner">
-            <img src="https://images.unsplash.com/photo-1594399429950-3bc814d4081c?q=80&w=400&auto=format&fit=crop" alt="Ravenclaw banner thumbnail" />
-          </button>
-          <button class="ig-thumb" data-index="2" aria-label="Gryffindor artifacts">
-            <img src="https://images.unsplash.com/photo-1594399430386-913fd5defaa4?q=80&w=400&auto=format&fit=crop" alt="Gryffindor artifacts thumbnail" />
-          </button>
-          <button class="ig-thumb" data-index="3" aria-label="Ravenclaw artifacts">
-            <img src="https://images.unsplash.com/photo-1632266484284-a11d9e3a460a?q=80&w=400&auto=format&fit=crop" alt="Ravenclaw artifacts thumbnail" />
-          </button>
-          <button class="ig-thumb" data-index="4" aria-label="Slytherin artifacts">
-            <img src="https://images.unsplash.com/photo-1667018357689-6dda5e5f3dd6?q=80&w=400&auto=format&fit=crop" alt="Slytherin artifacts thumbnail" />
-          </button>
-        </div>
-      </div>
+    <section id="intro">
+        <h2>Why I Love Korean Skincare</h2>
+        <p style="text-align:center; max-width:600px; margin:auto;">
+            Korean skincare focuses on gentle ingredients, hydration, and long-term results.
+            My skin has never looked better since I have adopted this routine!
+            Here are some of my favorite products and a look into my personal routine.
+        </p>
     </section>
 
-    <div class="filters" id="houses">
-      <span class="chip active" data-house="all">All</span>
-      <span class="chip" data-house="gryffindor">Gryffindor</span>
-      <span class="chip" data-house="slytherin">Slytherin</span>
-      <span class="chip" data-house="ravenclaw">Ravenclaw</span>
-      <span class="chip" data-house="hufflepuff">Hufflepuff</span>
-    </div>
+    <section id="favorites">
+        <h2>My Favorite Products</h2>
 
-    <div class="grid">
-      <article class="card" data-house="gryffindor">
-        <img src="https://images.unsplash.com/photo-1654344009476-09872e6243a1?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Gryffindor scarlet banner"/>
-        <div class="pad">
-          <span class="tag gryff"><span class="dot"></span>Gryffindor</span>
-          <h3>Marauder's Map</h3>
-          <p class="muted">Keeps track of everyone at Hogwarts… mischief managed.</p>
+        <div class="gallery">
+            <div class="product">
+                <img src="images/vtreedleshot.jpg" alt="VT Reedle Shot">
+                <div class="description">This serum has microneedles which can penetrate the skin to allow clearer, smoother skin. </div>
+            </div>
+
+            <div class="product">
+                <img src="images/anucleansing.jpg" alt="Anua Cleansing Oil">
+                <div class="description">This cleansing oil will get rid of any dead skin, debris, and makeup for clean skin.</div>
+            </div>
+
+            <div class="product">
+                <img src="images/cream.jpg" alt="Illiyoon Cream">
+                <div class="description">This cream provides intense hydration leaving your skin looking glossy, moisturized, and plump.</div>
+            </div>
         </div>
-      </article>
-
-      <article class="card" data-house="slytherin" style="display:none">
-        <img src="https://media.sketchfab.com/models/2c84afea5a804f8986431d196b06eda9/thumbnails/70033bba492c45099315256b0416f638/54194771820b44588d66cb801841fe88.jpeg" alt="Slytherin emerald banner"/>
-        <div class="pad">
-          <span class="tag slyth"><span class="dot"></span>Slytherin</span>
-          <h3>Salazar's Locket</h3>
-          <p class="muted">An heirloom with a dark past, sealed with Parseltongue.</p>
-        </div>
-      </article>
-
-      <article class="card" data-house="ravenclaw">
-        <img src="https://images.unsplash.com/photo-1594399429950-3bc814d4081c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Ravenclaw cobalt banner"/>
-        <div class="pad">
-          <span class="tag rav"><span class="dot"></span>Ravenclaw</span>
-          <h3>Diadem of Rowena</h3>
-          <p class="muted">Bestows wisdom to the worthy — if you can find it.</p>
-        </div>
-      </article>
-
-      <article class="card" data-house="hufflepuff" style="display:none">
-        <img src="https://cdnb.artstation.com/p/assets/covers/images/059/163/667/large/oleh-pylypiuk-ollerion-oleh-pylypiuk-ollerion-render-camera-3.jpg?odnHeight=117&odnWidth=117&odnBg=FFFFFF" alt="Hufflepuff amber banner"/>
-        <div class="pad">
-          <span class="tag huff"><span class="dot"></span>Hufflepuff</span>
-          <h3>Hufflepuff's Cup</h3>
-          <p class="muted">A small cup with a large legacy in Helga’s house.</p>
-        </div>
-      </article>
-
-      <article class="card" data-house="gryffindor">
-        <img src="https://images.unsplash.com/photo-1594399430386-913fd5defaa4?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Gryffindor scarlet artifacts"/>
-        <div class="pad">
-          <span class="tag gryff"><span class="dot"></span>Gryffindor</span>
-          <h3>Sword of Gryffindor</h3>
-          <p class="muted">Goblin-made, appears to true Gryffindors in need.</p>
-        </div>
-      </article>
-
-      <article class="card" data-house="ravenclaw" style="display:none">
-        <img src="https://images.unsplash.com/photo-1632266484284-a11d9e3a460a?q=80&w=689&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Ravenclaw artifacts"/>
-        <div class="pad">
-          <span class="tag rav"><span class="dot"></span>Ravenclaw</span>
-          <h3>Time-Turner</h3>
-          <p class="muted">A delicate device for revisiting hours past.</p>
-        </div>
-      </article>
-
-      <article class="card" data-house="slytherin">
-        <img src="https://images.unsplash.com/photo-1667018357689-6dda5e5f3dd6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Slytherin artifacts"/>
-        <div class="pad">
-          <span class="tag slyth"><span class="dot"></span>Slytherin</span>
-          <h3>Basilisk Fang</h3>
-          <p class="muted">Venom potent enough to destroy a Horcrux.</p>
-        </div>
-      </article>
-    </div>
-
-    <section class="faq" id="faq">
-      <h2>Frequently Asked Questions</h2>
-      <div class="qa">
-        <div class="q">Is this an official site?</div>
-        <div class="a">No — this is a student project inspired by the Frans Hals Museum aesthetic and built to demonstrate jQuery enhancements.</div>
-      </div>
-      <div class="qa">
-        <div class="q">How were the interactions made?</div>
-        <div class="a">jQuery selectors (including filters like <code>:odd</code>) plus effects like <code>slideToggle()</code> and <code>fadeIn()</code> power the UI.</div>
-      </div>
-      <div class="qa">
-        <div class="q">Can I filter by Hogwarts house?</div>
-        <div class="a">Yes — use the chips above the gallery to show only Gryffindor, Slytherin, Ravenclaw, or Hufflepuff items.</div>
-      </div>
     </section>
-  </main>
 
-  <footer class="wrap">
-    <small>Harry Potter™ is a trademark of its respective owners. Educational use.</small>
-  </footer>
+    <section id="routine">
+        <h2>My Skincare Routine</h2>
 
-  <script>
-    $(function () {
-      $(".card:odd .pad").css("background","linear-gradient(180deg, #141420, #111118)");
+        <div class="step">
+            Step 1: Cleanser
+            <div class="step-details">For the first step, I will usually do double cleansing. 
+            I first go in with the Anu Cleansing oil to remove dirt, makeup, and any excess oil or dead skin off of my face.
+            Then I will go in with my Dokdo Cleanser and lather it in my hands until it turns to foam to remove any excess dirt from my face.</div>
+        </div>
 
-      $(".chip").on("click", function(){
-        $(".chip").removeClass("active");
-        $(this).addClass("active");
-        const house = $(this).data("house");
-        const $cards = $(".card");
-        if(house === "all"){ 
-          $cards.stop(true,true).fadeIn(180); 
-        } else {
-          $cards.hide();
-          $cards.filter("[data-house='" + house + "']").fadeIn(200);
-        }
-        $(".menu li").removeClass("active");
-        $(".menu li:contains('Houses')").addClass("active");
-      });
+        <div class="step">
+            Step 2: Toner
+            <div class="step-details">I use the Klairs toner for sensitive skin. 
+            This helps balance your pH levels and brings back hydration to the skin.</div>
+        </div>
 
-      $("#revealArtifacts").on("click", function(){
-        $(".card:hidden").slice(0,2).fadeIn(220);
-      });
+        <div class="step">
+            Step 3: Essence
+            <div class="step-details">For this step I use the Klair Vitamin C serum.
+            This helps improve skin tone and will brighten the skin.</div>
+        </div>
 
-      let oddVisible = true;
-      $("#toggleOdd").on("click", function(){
-        const $oddCards = $(".card:odd");
-        oddVisible ? $oddCards.slideUp(180) : $oddCards.slideDown(180);
-        oddVisible = !oddVisible;
-      });
+        <div class="step">
+            Step 4: Moisturizer
+            <div class="step-details">For my last step I will use my Illiyoon cream to moisturize my skin.
+            This can help repair your skin barrier and is great for sensitive skin.</div>
+        </div>
 
-      $(".q").on("click", function(){
-        const $qa = $(this).closest(".qa");
-        $qa.find(".a").stop(true,true).slideToggle(180);
-        $qa.siblings().find(".a:visible").slideUp(160);
-      });
+        <button id="showRec">Show My Top Recommendation</button>
 
-      $(".menu a").on("click", function(){
-        $(".menu li").removeClass("active");
-        $(this).parent().addClass("active");
-      });
-    });
-  </script>
+        <div id="recommendation">
+            <h3>⭐ Sungboon Editor Collagen Mask</h3>
+            <p>This is super hydrating, ani-wrinkle and lifting, and provides real collagen to the skin.</p>
+        </div>
 
-  <script>
-    $(function () {
-      const images = [
-        { src: "https://images.unsplash.com/photo-1654344009476-09872e6243a1?q=80&w=1600&auto=format&fit=crop", alt: "Gryffindor scarlet banner" },
-        { src: "https://images.unsplash.com/photo-1594399429950-3bc814d4081c?q=80&w=1600&auto=format&fit=crop", alt: "Ravenclaw cobalt banner" },
-        { src: "https://images.unsplash.com/photo-1594399430386-913fd5defaa4?q=80&w=1600&auto=format&fit=crop", alt: "Gryffindor artifacts" },
-        { src: "https://images.unsplash.com/photo-1632266484284-a11d9e3a460a?q=80&w=1600&auto=format&fit=crop", alt: "Ravenclaw artifacts" },
-        { src: "https://images.unsplash.com/photo-1667018357689-6dda5e5f3dd6?q=80&w=1600&auto=format&fit=crop", alt: "Slytherin artifacts" }
-      ];
+        <br>
+        <button id="openModal" style="margin-top:20px;">What is Double Cleansing?</button>
+    </section>
 
-      const $hero = $("#ig-hero-img");
-      const $thumbs = $("#ig-thumbs .ig-thumb");
-      const $next = $("#ig-next");
-      const $prev = $("#ig-prev");
-      const $play = $("#ig-toggle-play");
+    <div id="modalOverlay"></div>
 
-      if (!$hero.length || !$thumbs.length) return;
+    <div id="modalBox">
+        <h3>What is Double Cleansing?</h3>
+        <p>Double cleansing uses an oil cleanser first to remove makeup and sunscreen, followed by a water-based cleanser to clean the skin thoroughly.</p>
+        <button class="closeModal">Close</button>
+    </div>
 
-      let current = 0;
-      let playing = false;
-      let timerId = null;
+    <footer id="contact">
+        <p>Created by Madina • JQuery Final Project</p>
+    </footer>
 
-      $hero.attr({ src: images[0].src, alt: images[0].alt }).css({ left: 0, opacity: 1 });
-      $thumbs.attr("tabindex", 0);
 
-      function goTo(index, direction) {
-        if (typeof direction !== "number") direction = (index > current) ? 1 : -1;
-        if (index === current) return;
 
-        current = (index + images.length) % images.length;
-        const width = $(".ig-hero").width() || 600;
-        const toX = -direction * width;
+    <script>
+        $("nav a").on("click", function(e) {
+            e.preventDefault();
+            let sectionID = $(this).attr("href");
+            $("html, body").animate({
+                scrollTop: $(sectionID).offset().top - 20
+            }, 600);
+        });
 
-        $hero.stop(true, true)
-          .animate({ left: toX, opacity: 0 }, 240, "swing", function () {
-            $hero.attr({ src: images[current].src, alt: images[current].alt });
-            $hero.css({ left: direction * width, opacity: 0 })
-                 .animate({ left: 0, opacity: 1 }, 260);
-          });
+        $(".product").hover(
+            function() {
+                $(this).find(".description").stop().fadeIn();
+            },
+            function() {
+                $(this).find(".description").stop().fadeOut();
+            }
+        );
 
-        $thumbs.removeClass("active").eq(current).addClass("active");
-      }
+        $(".step").on("click", function() {
+            $(this).find(".step-details").slideToggle();
+        });
 
-      function next(){ goTo(current + 1, 1); }
-      function prev(){ goTo(current - 1, -1); }
+        $("#showRec").on("click", function() {
+            $("#recommendation").fadeIn(800);
+        });
 
-      $next.on("click", next);
-      $prev.on("click", prev);
+        $("#openModal").on("click", function() {
+            $("#modalOverlay").fadeIn(300);
+            $("#modalBox").fadeIn(400);
+        });
 
-      $thumbs.on("click keydown", function(e){
-        if (e.type === "click" || e.key === "Enter" || e.key === " ") {
-          const idx = parseInt($(this).data("index"), 10);
-          if (!Number.isNaN(idx)) goTo(idx);
-        }
-      });
+        $(".closeModal, #modalOverlay").on("click", function() {
+            $("#modalOverlay").fadeOut(300);
+            $("#modalBox").fadeOut(300);
+        });
+    </script>
 
-      $(document).on("keydown", function(e){
-        if (e.key === "ArrowRight") next();
-        if (e.key === "ArrowLeft") prev();
-      });
-
-      $play.on("click", function(){
-        playing = !playing;
-        $play.attr("aria-pressed", String(playing)).text(playing ? "⏸ Pause" : "▶ Play");
-        if (playing) {
-          if (timerId) clearInterval(timerId);
-          timerId = setInterval(next, 3000);
-        } else {
-          clearInterval(timerId);
-          timerId = null;
-        }
-      });
-    });
-  </script>
 </body>
 </html>
